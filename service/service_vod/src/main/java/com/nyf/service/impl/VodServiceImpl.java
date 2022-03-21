@@ -11,10 +11,13 @@ import com.nyf.ExceptionHandler.exception.MyException;
 import com.nyf.service.VodService;
 import com.nyf.util.ConstantVodUtils;
 import com.nyf.util.InitObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
+
 @Service
 public class VodServiceImpl implements VodService {
     @Override
@@ -66,6 +69,28 @@ public class VodServiceImpl implements VodService {
         } catch (ClientException e) {
             throw new MyException(20001,"视频删除失败");
         }
+    }
+
+    //根据id集合删除多个视频
+    @Override
+    public void removeMoreVideo(List<String> videoIdList) {
+        //将集合转换为1,2,3格式
+        String str = StringUtils.join(videoIdList.toArray(), ",");
+
+        try {
+            //初始化对象
+            DefaultAcsClient client = InitObject.initVodClient(ConstantVodUtils.ACCESSKEY_ID, ConstantVodUtils.ACCESSKEY_SECRET);
+            //创建删除视频request对象
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            //向request设置要删除视频的id值
+            request.setVideoIds(str);
+            //调用初始化对象的方法实现删除
+            DeleteVideoResponse response = client.getAcsResponse(request);
+            System.out.println("RequestId = "+ response.getRequestId()+"\n");
+        }catch (Exception e){
+            throw new MyException(20001,"视频删除失败");
+        }
+
     }
 
 }

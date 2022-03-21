@@ -1,6 +1,8 @@
 package com.nyf.serviceedu.controller;
 
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.nyf.serviceedu.api.VodClient;
 import com.nyf.serviceedu.entity.EduVideo;
 import com.nyf.serviceedu.service.EduVideoService;
 import com.nyf.utils.R;
@@ -23,6 +25,8 @@ public class EduVideoController {
     @Autowired
     private EduVideoService eduVideoService;
 
+    @Autowired
+    private VodClient vodClient;
     //添加小节
     @PostMapping("/addVideo")
     public R addVideo(@RequestBody EduVideo eduVideo){
@@ -34,7 +38,17 @@ public class EduVideoController {
     //删除小节
     // TODO 后面这个方法需要完善，删除小节的时候，同时也要把视频删除
     @DeleteMapping("/deleteVideo/{id}")
-    public R deleteVideo(@PathVariable String id){
+    public R deleteVideo(@PathVariable("id") String id){
+        //查询云端视频id
+        EduVideo eduVideo = eduVideoService.getById(id);
+        String videoSourceId = eduVideo.getVideoSourceId();
+        //判断小节中是否有对应的视频文件
+        if (!StringUtils.isEmpty(videoSourceId)){
+            //有就删除
+            vodClient.removeAliyunVideoById(videoSourceId);
+        }
+
+        //删除小节
         eduVideoService.removeById(id);
         return R.ok();
     }

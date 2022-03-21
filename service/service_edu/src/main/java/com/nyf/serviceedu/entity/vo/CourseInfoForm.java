@@ -1,11 +1,14 @@
 package com.nyf.serviceedu.entity.vo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @ApiModel(value = "课程基本信息", description = "编辑课程基本信息的表单对象")
 @Data
@@ -40,4 +43,12 @@ public class CourseInfoForm implements Serializable {
     @ApiModelProperty(value = "课程简介")
     private String description;
 
+    @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date gmtCreate;
+
+
+    @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date gmtModified;
 }
