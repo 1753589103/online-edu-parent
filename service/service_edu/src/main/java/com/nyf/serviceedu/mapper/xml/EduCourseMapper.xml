@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyf.serviceedu.mapper.EduCourseMapper">
+
+    <select id="getPublishCourseInfo"    resultType="com.nyf.serviceedu.entity.vo.CoursePublishVo">
+        SELECT
+            ec.id,
+            ec.title,
+            ec.cover,
+            ec.lesson_num AS lessonNum,
+            ec.price,
+            s1.title AS subjectLevelOne,
+            s2.title AS subjectLevelTwo,
+            t.name AS teacherName
+        FROM
+            edu_course ec
+                LEFT JOIN edu_teacher t ON ec.teacher_id = t.id
+                LEFT JOIN edu_subject s1 ON ec.subject_parent_id = s1.id
+                LEFT JOIN edu_subject s2 ON ec.subject_id = s2.id
+        WHERE
+            ec.id = #{id}
+    </select>
+</mapper>
