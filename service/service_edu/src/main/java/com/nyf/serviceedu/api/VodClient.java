@@ -1,5 +1,6 @@
 package com.nyf.serviceedu.api;
 
+import com.nyf.serviceedu.api.impl.VodClientImpl;
 import com.nyf.utils.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Component
-@FeignClient("service-vod")
+@FeignClient(value = "service-vod",fallback = VodClientImpl.class)
 public interface VodClient {
     //根据视频id删除阿里云视频
     @DeleteMapping("/eduvod/video/removeAliyunVideoById/{id}")
