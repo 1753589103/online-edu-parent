@@ -1,5 +1,6 @@
 package com.nyf.serviceedu.entity.vo;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,5 +15,8 @@ public class VideoVo implements Serializable {
     private String title;
 
     private Boolean free;
+
+    @ApiModelProperty(value = "云端视频资源")
+    private String videoSourceId;
 
 }

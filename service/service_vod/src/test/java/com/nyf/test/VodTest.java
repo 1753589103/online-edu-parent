@@ -24,7 +24,7 @@ public class VodTest {
         GetPlayInfoResponse response = new GetPlayInfoResponse();
         GetPlayInfoRequest request = new GetPlayInfoRequest();
         //向request对象设置视频id值
-        request.setVideoId("c4a2436a591b4cc280a556f4518d08e0");
+        request.setVideoId("019848d218ef445d905d712ce401cf02");
 
 
         //调用初始化对象里面的方法传递request，获取数据

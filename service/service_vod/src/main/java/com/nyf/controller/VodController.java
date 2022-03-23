@@ -1,9 +1,9 @@
 package com.nyf.controller;
 
 
-
-import com.nyf.utils.R;
+import com.nyf.ExceptionHandler.exception.MyException;
 import com.nyf.service.VodService;
+import com.nyf.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,5 +38,18 @@ public class VodController {
     public R removeBatch(@RequestParam("videoIdList") List<String> videoIdList){
         vodService.removeMoreVideo(videoIdList);
         return R.ok();
+    }
+
+    //根据视频id获取视频凭证
+    @GetMapping("/getPlayAuth/{id}")
+    public R getPlayAuth(@PathVariable String id){
+        try {
+            String playAuth = vodService.getPlayAuth(id);
+            return R.ok().data("playAuth",playAuth);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException(20001,"获取视频凭证失败");
+        }
+
     }
 }

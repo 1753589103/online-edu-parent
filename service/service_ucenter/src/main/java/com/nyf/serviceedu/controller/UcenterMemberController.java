@@ -4,9 +4,11 @@ package com.nyf.serviceedu.controller;
 import com.nyf.serviceedu.entity.UcenterMember;
 import com.nyf.serviceedu.entity.vo.LoginVo;
 import com.nyf.serviceedu.entity.vo.RegisterVo;
+import com.nyf.serviceedu.entity.vo.UcenterMemberVo;
 import com.nyf.serviceedu.service.UcenterMemberService;
 import com.nyf.utils.JwtUtils;
 import com.nyf.utils.R;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,16 @@ public class UcenterMemberController {
         UcenterMember member = ucenterMemberService.getById(id);
 
         return R.ok().data("userInfo", member);
+    }
+
+    //根据用户id查询用户信息
+    @PostMapping("/getMemberInfoById/{memberId}")
+    public UcenterMemberVo getMemberInfoById(@PathVariable String memberId){
+        UcenterMember member = ucenterMemberService.getById(memberId);
+        UcenterMemberVo memberVo = new UcenterMemberVo();
+        BeanUtils.copyProperties(member,memberVo);
+
+        return memberVo;
     }
 }
 

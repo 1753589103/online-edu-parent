@@ -1,10 +1,9 @@
 package com.nyf.serviceedu.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.nyf.serviceedu.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.nyf.serviceedu.entity.EduVideo;
+import com.nyf.serviceedu.entity.EduCourse;
 import com.nyf.serviceedu.entity.vo.CoursePublishVo;
+import com.nyf.serviceedu.entity.vo.CourseWebVo;
 
 /**
  * <p>
@@ -17,4 +16,5 @@ import com.nyf.serviceedu.entity.vo.CoursePublishVo;
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
     public CoursePublishVo getPublishCourseInfo(String courseId);
 
+    CourseWebVo getBaseCourseInfo(String courseId);
 }

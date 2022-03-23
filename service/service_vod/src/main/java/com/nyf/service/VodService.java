@@ -10,4 +10,6 @@ public interface VodService {
     void removeAliyunVideoById(String id);
     //根据id删除多个阿里云视频
     void removeMoreVideo(List<String> videoIdList);
+
+    String getPlayAuth(String id);
 }

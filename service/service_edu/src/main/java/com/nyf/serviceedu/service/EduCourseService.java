@@ -1,13 +1,12 @@
 package com.nyf.serviceedu.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nyf.serviceedu.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.nyf.serviceedu.entity.vo.CourseInfoForm;
-import com.nyf.serviceedu.entity.vo.CoursePublishVo;
-import com.nyf.serviceedu.entity.vo.CourseQuery;
+import com.nyf.serviceedu.entity.EduCourse;
+import com.nyf.serviceedu.entity.vo.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,4 +32,10 @@ public interface EduCourseService extends IService<EduCourse> {
     boolean removeCourse(String id);
 
     List<EduCourse> selectHotCourse();
+
+    //前台多条件分页查询
+    Map<String, Object> getCourseFrontInfo(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo);
+
+    //前台根据课程id，查询课程基础信息
+    CourseWebVo getBaseCourseInfo(String courseId);
 }

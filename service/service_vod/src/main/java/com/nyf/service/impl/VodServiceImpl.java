@@ -7,6 +7,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoResponse;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.nyf.ExceptionHandler.exception.MyException;
 import com.nyf.service.VodService;
 import com.nyf.util.ConstantVodUtils;
@@ -30,7 +32,7 @@ public class VodServiceImpl implements VodService {
             String fileName = file.getOriginalFilename();
 
             //title：上传之后显示名称
-            String title = fileName.substring(0,fileName.lastIndexOf("."));
+            String title = fileName.substring(0, fileName.lastIndexOf("."));
 
             //inputStream：上传文件的输入流
             InputStream inputStream = file.getInputStream();
@@ -64,10 +66,10 @@ public class VodServiceImpl implements VodService {
             DeleteVideoRequest request = new DeleteVideoRequest();
             request.setVideoIds(id);
             DeleteVideoResponse response = client.getAcsResponse(request);
-            System.out.println("RequestId = "+ response.getRequestId()+"\n");
+            System.out.println("RequestId = " + response.getRequestId() + "\n");
 
         } catch (ClientException e) {
-            throw new MyException(20001,"视频删除失败");
+            throw new MyException(20001, "视频删除失败");
         }
     }
 
@@ -86,11 +88,35 @@ public class VodServiceImpl implements VodService {
             request.setVideoIds(str);
             //调用初始化对象的方法实现删除
             DeleteVideoResponse response = client.getAcsResponse(request);
-            System.out.println("RequestId = "+ response.getRequestId()+"\n");
-        }catch (Exception e){
-            throw new MyException(20001,"视频删除失败");
+            System.out.println("RequestId = " + response.getRequestId() + "\n");
+        } catch (Exception e) {
+            throw new MyException(20001, "视频删除失败");
         }
 
+    }
+
+    //根据视频id获取视频凭证
+    @Override
+    public String getPlayAuth(String id) {
+        String accesskeyId = "LTAI5t7KpSvi2AEi1jK2Dz9c";
+        String accesskeySecret = "VPIm18wLC2oqmgc0Yjtxu4I89MeE2m";
+        try {
+            //创建初始化对象
+            DefaultAcsClient cl = InitObject.initVodClient(accesskeyId,accesskeySecret);
+            //创建获取视频地址request对象和response对象
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+            //向request对象设置视频id值
+            request.setVideoId(id);
+
+            GetVideoPlayAuthResponse response = cl.getAcsResponse(request);
+
+            //获取视频播放凭证
+            return response.getPlayAuth();
+
+        } catch (ClientException e) {
+            e.printStackTrace();
+            throw new MyException(20001,"获取视频凭证失败");
+        }
     }
 
 }

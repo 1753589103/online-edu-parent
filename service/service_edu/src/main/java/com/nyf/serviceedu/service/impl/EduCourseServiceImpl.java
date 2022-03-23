@@ -1,15 +1,12 @@
 package com.nyf.serviceedu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nyf.ExceptionHandler.exception.MyException;
 import com.nyf.serviceedu.entity.EduCourse;
 import com.nyf.serviceedu.entity.EduCourseDescription;
-import com.nyf.serviceedu.entity.vo.CourseInfoForm;
-import com.nyf.serviceedu.entity.vo.CoursePublishVo;
-import com.nyf.serviceedu.entity.vo.CourseQuery;
+import com.nyf.serviceedu.entity.vo.*;
 import com.nyf.serviceedu.mapper.EduCourseMapper;
 import com.nyf.serviceedu.service.EduChapterService;
 import com.nyf.serviceedu.service.EduCourseDescriptionService;
@@ -19,8 +16,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -167,6 +167,71 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         wrapper.last("limit 8");
 
         return baseMapper.selectList(wrapper);
+    }
+
+    @Override
+    public Map<String, Object> getCourseFrontInfo(Page<EduCourse> pageCourse, CourseFrontVo courseFrontVo) {
+        String title = null;
+        String subjectId = null;
+        String subjectParentId = null;
+        String gmtCreateSort = null;
+        String buyCountSort = null;
+        String priceSort = null;
+        String teacherId = null;
+
+        if (!StringUtils.isEmpty(courseFrontVo)){
+            title = courseFrontVo.getTitle();
+            subjectId = courseFrontVo.getSubjectId();
+            subjectParentId = courseFrontVo.getSubjectParentId();
+            gmtCreateSort = courseFrontVo.getGmtCreateSort();
+            buyCountSort = courseFrontVo.getBuyCountSort();
+            priceSort = courseFrontVo.getPriceSort();
+            teacherId = courseFrontVo.getTeacherId();
+        }
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        //判断条件值是否为空，不为空拼接条件
+        if (!StringUtils.isEmpty(subjectParentId)){//一级分类
+            wrapper.eq("subject_parent_id",subjectParentId);
+        }
+        if (!StringUtils.isEmpty(subjectId)){//二级分类
+            wrapper.eq("subject_id",subjectId);
+        }
+        if (!StringUtils.isEmpty(buyCountSort)){//关注度
+            wrapper.orderByDesc("buy_count");
+        }
+        if (!StringUtils.isEmpty(priceSort)){//价格
+            wrapper.orderByDesc("price");
+        }
+        if (!StringUtils.isEmpty(gmtCreateSort)){//最新，创建时间
+            wrapper.orderByDesc("gmt_create");
+        }
+
+
+        baseMapper.selectPage(pageCourse, wrapper);
+
+        long total = pageCourse.getTotal();//总记录数
+        List<EduCourse> courseList = pageCourse.getRecords();//数据集合
+        long size = pageCourse.getSize();//每页记录数
+        long current = pageCourse.getCurrent();//当前页
+        long pages = pageCourse.getPages();//总页数
+        boolean hasPrevious = pageCourse.hasPrevious();//是否有上一页
+        boolean hasNext = pageCourse.hasNext();//是否有下一页
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("total",total);
+        map.put("list",courseList);
+        map.put("size",size);
+        map.put("current",current);
+        map.put("pages",pages);
+        map.put("hasPrevious",hasPrevious);
+        map.put("hasNext",hasNext);
+
+        return map;
+    }
+
+    @Override
+    public CourseWebVo getBaseCourseInfo(String courseId) {
+        return baseMapper.getBaseCourseInfo(courseId);
     }
 
 }
