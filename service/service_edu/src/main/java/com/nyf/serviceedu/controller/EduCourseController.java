@@ -3,13 +3,12 @@ package com.nyf.serviceedu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nyf.serviceedu.entity.EduCourse;
-import com.nyf.serviceedu.entity.vo.CourseInfoForm;
-import com.nyf.serviceedu.entity.vo.CoursePublishVo;
-import com.nyf.serviceedu.entity.vo.CourseQuery;
+import com.nyf.serviceedu.entity.vo.*;
 import com.nyf.serviceedu.service.EduCourseService;
 import com.nyf.utils.R;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,6 +109,17 @@ public class EduCourseController {
         }else {
             return R.error();
         }
+    }
+    //根据课程id，查询课程信息【订单】
+    @PostMapping("/getCourseInfoByIdOrder/{courseId}")
+    public EduCourseVo getCourseInfoByIdOrder(@PathVariable String courseId){
+        CourseWebVo courseInfo = eduCourseService.getBaseCourseInfo(courseId);
+
+        EduCourseVo eduCourseVo = new EduCourseVo();
+        BeanUtils.copyProperties(courseInfo,eduCourseVo);
+
+        return eduCourseVo;
+
     }
 }
 

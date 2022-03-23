@@ -109,4 +109,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         member.setAvatar("https://online-teach-file.oss-cn-beijing.aliyuncs.com/teacher/2019/10/30/65423f14-49a9-4092-baf5-6d0ef9686a85.png");
         baseMapper.insert(member);
     }
+
+    @Override
+    public Integer getCountRegister(String day) {
+        //根据日期，获取那天注册人数
+            return baseMapper.getCountRegister(day);
+    }
 }
