@@ -7,6 +7,8 @@ import com.nyf.serviceedu.entity.vo.CourseInfoForm;
 import com.nyf.serviceedu.entity.vo.CoursePublishVo;
 import com.nyf.serviceedu.entity.vo.CourseQuery;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务类
@@ -29,4 +31,6 @@ public interface EduCourseService extends IService<EduCourse> {
     void pageQuery(Page<EduCourse> pageParam, CourseQuery courseQuery);
 
     boolean removeCourse(String id);
+
+    List<EduCourse> selectHotCourse();
 }

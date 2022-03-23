@@ -3,11 +3,13 @@ package com.nyf.serviceedu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nyf.serviceedu.entity.CrmBanner;
 import com.nyf.serviceedu.entity.vo.BannerQuery;
 import com.nyf.serviceedu.mapper.CrmBannerMapper;
 import com.nyf.serviceedu.service.CrmBannerService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
 @Service
 public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner> implements CrmBannerService {
 
+    @Cacheable(value = "banner",key = "'getAllBanner'" )
     @Override
     public List<CrmBanner> getAllBanner() {
         List<CrmBanner> list = baseMapper.selectList(null);
@@ -54,6 +57,25 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
 
         //带上门判断后的条件进行分页查询
         baseMapper.selectPage(bannerPage, wrapper);
+    }
+    @CacheEvict(value = "banner", allEntries=true)
+    @Override
+    public void saveBanner(CrmBanner banner) {
+        baseMapper.insert(banner);
+    }
+
+    //CacheEvict用于更新或删除，allEntries属性清楚缓存
+    @CacheEvict(value = "banner", allEntries=true)
+    @Override
+    public void updateBannerById(CrmBanner banner) {
+        baseMapper.updateById(banner);
+    }
+
+    //CacheEvict用于更新或删除，allEntries属性清楚缓存
+    @CacheEvict(value = "banner", allEntries=true)
+    @Override
+    public void removeBannerById(String id) {
+        baseMapper.deleteById(id);
     }
 
 }

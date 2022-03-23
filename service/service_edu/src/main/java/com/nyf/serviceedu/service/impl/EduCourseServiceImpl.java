@@ -3,10 +3,10 @@ package com.nyf.serviceedu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nyf.ExceptionHandler.exception.MyException;
 import com.nyf.serviceedu.entity.EduCourse;
 import com.nyf.serviceedu.entity.EduCourseDescription;
-import com.nyf.serviceedu.entity.EduVideo;
 import com.nyf.serviceedu.entity.vo.CourseInfoForm;
 import com.nyf.serviceedu.entity.vo.CoursePublishVo;
 import com.nyf.serviceedu.entity.vo.CourseQuery;
@@ -14,11 +14,13 @@ import com.nyf.serviceedu.mapper.EduCourseMapper;
 import com.nyf.serviceedu.service.EduChapterService;
 import com.nyf.serviceedu.service.EduCourseDescriptionService;
 import com.nyf.serviceedu.service.EduCourseService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nyf.serviceedu.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -154,6 +156,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         }else {
             throw new MyException(20001,"删除失败");
         }
+    }
+
+    @Override
+    @Cacheable(key = "'selectHotCourse'",value = "course")
+    public List<EduCourse> selectHotCourse() {
+        //查询前8条热门课程
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("view_count");
+        wrapper.last("limit 8");
+
+        return baseMapper.selectList(wrapper);
     }
 
 }
