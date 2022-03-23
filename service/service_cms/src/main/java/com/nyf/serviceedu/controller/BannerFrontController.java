@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin //解决跨域问题
+//@CrossOrigin //解决跨域问题
 @RestController
 @RequestMapping("/cmsservice/bannerFront")
 public class BannerFrontController {

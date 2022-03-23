@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2022-03-22
  */
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/serviceUcenter/ucenter")
 public class UcenterMemberController {
     @Autowired
