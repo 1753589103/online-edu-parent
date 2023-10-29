@@ -14,6 +14,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableDiscoveryClient //服务发现功能
 public class OrderApplication {
     public static void main(String[] args) {
-        SpringApplication.run(OrderApplication.class,args);
+        try {
+            SpringApplication.run(OrderApplication.class, args);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+//        SpringApplication.run(OrderApplication.class,args);
     }
 }

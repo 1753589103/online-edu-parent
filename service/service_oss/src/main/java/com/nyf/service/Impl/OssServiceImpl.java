@@ -8,7 +8,6 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
@@ -64,5 +63,4 @@ public class OssServiceImpl implements OssService {
             return null;
         }
     }
-
 }

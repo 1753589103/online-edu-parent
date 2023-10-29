@@ -20,7 +20,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         System.out.println(projectPath);
-        gc.setOutputDir("D:\\my-project\\online-edu-parent\\service\\service_edu" + "/src/main/java");
+        gc.setOutputDir("D:\\my-project\\online-edu-parent\\service\\service_acl" + "/src/main/java");
         gc.setAuthor("NiuYeFan");
         gc.setOpen(false); //生成后是否打开资源管理器
         gc.setFileOverride(false); //重新生成时文件是否覆盖
@@ -43,7 +43,7 @@ public class CodeGenerator {
         mpg.setDataSource(dsc);
 // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("serviceedu"); //模块名
+        pc.setModuleName("serviceacl"); //模块名
         pc.setParent("com.nyf");
         pc.setController("controller");
         pc.setEntity("entity");
@@ -52,7 +52,7 @@ public class CodeGenerator {
         mpg.setPackageInfo(pc);
 // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_comment");
+        strategy.setInclude("acl_permission","acl_role","acl_role_permission","acl_user","acl_user_role");
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
 
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀

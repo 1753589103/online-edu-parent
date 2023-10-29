@@ -24,7 +24,7 @@ public class VodTest {
         GetPlayInfoResponse response = new GetPlayInfoResponse();
         GetPlayInfoRequest request = new GetPlayInfoRequest();
         //向request对象设置视频id值
-        request.setVideoId("019848d218ef445d905d712ce401cf02");
+        request.setVideoId("0022789075ba71ee801a4531858c0102");
 
 
         //调用初始化对象里面的方法传递request，获取数据
@@ -46,7 +46,7 @@ public class VodTest {
         //创建获取视频地址request对象和response对象
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
         //向request对象设置视频id值
-        request.setVideoId("c4a2436a591b4cc280a556f4518d08e0");
+        request.setVideoId("0022789075ba71ee801a4531858c0102");
 
         GetVideoPlayAuthResponse response = cl.getAcsResponse(request);
 
@@ -60,8 +60,8 @@ public class VodTest {
     public void testFileUpload(){
         String accessKeyId = "LTAI5t7KpSvi2AEi1jK2Dz9c";
         String accessKeySecret = "VPIm18wLC2oqmgc0Yjtxu4I89MeE2m";
-        String title = "6 - What If I Want to Move Faster"; //上传之后文件的名称
-        String fileName = "C:\\Users\\牛业帆\\Desktop\\546011390-1-64.flv"; //本地文件的路径和名称
+        String title = "6-What_If_I_Want_to_Move_Faster"; //上传之后文件的名称
+        String fileName = "C:\\Users\\牛业帆\\Videos\\视频点播控制台.flv"; //本地文件的路径和名称
 
         UploadVideoRequest request = new UploadVideoRequest(accessKeyId, accessKeySecret, title, fileName);
         /* 可指定分片上传时每个分片的大小，默认为2M字节 */

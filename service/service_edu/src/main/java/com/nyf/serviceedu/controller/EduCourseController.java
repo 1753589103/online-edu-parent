@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,6 +66,8 @@ public class EduCourseController {
         EduCourse eduCourse = new EduCourse();
         eduCourse.setStatus("Normal"); //设置课程发布状态
         eduCourse.setId(id);
+        eduCourse.setGmtCreate(new Date());
+        eduCourse.setGmtModified(new Date());
         boolean flag = eduCourseService.updateById(eduCourse);
         if (flag){
             return R.ok();
@@ -114,7 +117,6 @@ public class EduCourseController {
     @PostMapping("/getCourseInfoByIdOrder/{courseId}")
     public EduCourseVo getCourseInfoByIdOrder(@PathVariable String courseId){
         CourseWebVo courseInfo = eduCourseService.getBaseCourseInfo(courseId);
-
         EduCourseVo eduCourseVo = new EduCourseVo();
         BeanUtils.copyProperties(courseInfo,eduCourseVo);
 
