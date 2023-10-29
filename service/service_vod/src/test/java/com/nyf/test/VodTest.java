@@ -19,7 +19,7 @@ public class VodTest {
     public static void main(String[] args) throws com.aliyuncs.exceptions.ClientException {
         //1、根据视频id获取视频播放地址
         //创建初始化对象
-        DefaultAcsClient cl = InitObject.initVodClient("LTAI5t7KpSvi2AEi1jK2Dz9c", "VPIm18wLC2oqmgc0Yjtxu4I89MeE2m");
+        DefaultAcsClient cl = InitObject.initVodClient("自己的key", "自己的keysecret");
         //创建获取视频地址request对象和response对象
         GetPlayInfoResponse response = new GetPlayInfoResponse();
         GetPlayInfoRequest request = new GetPlayInfoRequest();
@@ -42,7 +42,7 @@ public class VodTest {
     @Test
     public void test1() throws ClientException, com.aliyuncs.exceptions.ClientException {
         //创建初始化对象
-        DefaultAcsClient cl = InitObject.initVodClient("LTAI5t7KpSvi2AEi1jK2Dz9c", "VPIm18wLC2oqmgc0Yjtxu4I89MeE2m");
+        DefaultAcsClient cl = InitObject.initVodClient("自己的key", "自己的keysecret");
         //创建获取视频地址request对象和response对象
         GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
         //向request对象设置视频id值
@@ -58,8 +58,8 @@ public class VodTest {
     }
     @Test
     public void testFileUpload(){
-        String accessKeyId = "LTAI5t7KpSvi2AEi1jK2Dz9c";
-        String accessKeySecret = "VPIm18wLC2oqmgc0Yjtxu4I89MeE2m";
+        String accessKeyId = "自己的key";
+        String accessKeySecret = "自己的keysecret";
         String title = "6-What_If_I_Want_to_Move_Faster"; //上传之后文件的名称
         String fileName = "C:\\Users\\牛业帆\\Videos\\视频点播控制台.flv"; //本地文件的路径和名称
 
